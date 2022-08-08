@@ -1,0 +1,1800 @@
+﻿<Window x:Class="TestLoadAnimation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestLoadAnimation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1855.45" Width="800" Name="mainW" >
+    <Window.Resources>
+        <Storyboard x:Key="RotateBorderStoryboard">
+            <PointAnimationUsingKeyFrames Storyboard.TargetName="GradientBrush" Storyboard.TargetProperty="StartPoint" AutoReverse="false" RepeatBehavior="Forever" AccelerationRatio="0" DecelerationRatio="0"  Duration="0:0:5">
+                <LinearPointKeyFrame KeyTime="0%" Value="0.5,1"/>
+                <LinearPointKeyFrame KeyTime="12.5%" Value="0.83,0.83"/>
+                <LinearPointKeyFrame KeyTime="25%" Value="1,0.5"/>
+                <LinearPointKeyFrame KeyTime="37.5%" Value="0.83,0.17"/>
+                <LinearPointKeyFrame KeyTime="50%" Value="0.5,0"/>
+                <LinearPointKeyFrame KeyTime="62.5%" Value="0.17,0.17"/>
+                <LinearPointKeyFrame KeyTime="75%" Value="0,0.5"/>
+                <LinearPointKeyFrame KeyTime="87.5%" Value="0.17,0.83"/>
+                <LinearPointKeyFrame KeyTime="100%" Value="0.5,1"/>                
+            </PointAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames Storyboard.TargetName="GradientBrush" Storyboard.TargetProperty="EndPoint" AutoReverse="false" RepeatBehavior="Forever" AccelerationRatio="0" DecelerationRatio="0" Duration="0:0:5">
+                <LinearPointKeyFrame KeyTime="0%" Value="0.5,0"/>
+                <LinearPointKeyFrame KeyTime="12.5%" Value="0.17,0.17"/>
+                <LinearPointKeyFrame KeyTime="25%" Value="0,0.5"/>
+                <LinearPointKeyFrame KeyTime="37.5%" Value="0.17,0.83"/>
+                <LinearPointKeyFrame KeyTime="50%" Value="0.5,1"/>
+                <LinearPointKeyFrame KeyTime="62.5%" Value="0.83,0.83"/>
+                <LinearPointKeyFrame KeyTime="75%" Value="1,0.5"/>
+                <LinearPointKeyFrame KeyTime="87.5%" Value="0.83,0.17"/>
+                <LinearPointKeyFrame KeyTime="100%" Value="0.5,0"/>
+            </PointAnimationUsingKeyFrames>
+        </Storyboard>
+        <ControlTemplate TargetType="Button" x:Key="btnTemplate">
+            <Border CornerRadius="10" BorderThickness="10">
+                <Border.BorderBrush>
+                    <LinearGradientBrush x:Name="GradientBrush" StartPoint="0.5, 1" EndPoint="0.5,0">
+                        <GradientStop Color="Blue" Offset="1" />
+                        <GradientStop Color="white" Offset="0.5" />
+                        <GradientStop Color="Blue" Offset="0" />
+                    </LinearGradientBrush>
+                </Border.BorderBrush>                
+            </Border>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard x:Name="myStoryBoard2" Storyboard="{StaticResource ResourceKey=RotateBorderStoryboard}"/>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <PauseStoryboard BeginStoryboardName="myStoryBoard2"/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>        
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Canvas Background="Transparent" Grid.Row="2" Height="20" Width="80">
+            <Ellipse x:Name="first" Width="8" Height="8" Canvas.Left="5" Canvas.Top="6" Fill="Red">
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="firstStoryboard">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="5"/>
+                                                <LinearDoubleKeyFrame KeyTime="12.5%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="25%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="37.5%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="65"/>
+                                                <LinearDoubleKeyFrame KeyTime="62.5%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="75%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="87.5%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="5"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <PauseStoryboard BeginStoryboardName="firstStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>                                  
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="second" Width="6" Height="6" Canvas.Left="20" Canvas.Top="7" Fill="MediumPurple">
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="secondStoryboard">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="12.5%" Value="5"/>
+                                                <LinearDoubleKeyFrame KeyTime="25%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="37.5%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="62.5%" Value="65"/>
+                                                <LinearDoubleKeyFrame KeyTime="75%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="87.5%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="20"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <PauseStoryboard BeginStoryboardName="secondStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="third" Width="6" Height="6" Canvas.Left="35" Canvas.Top="7" Fill="blue">
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="thirdStoryboard">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="12.5%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="25%" Value="5"/>
+                                                <LinearDoubleKeyFrame KeyTime="37.5%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="62.5%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="75%" Value="65"/>
+                                                <LinearDoubleKeyFrame KeyTime="87.5%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="35"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <PauseStoryboard BeginStoryboardName="thirdStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="forth" Width="6" Height="6" Canvas.Left="50" Canvas.Top="7" Fill="yellow">
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="fourthStoryboard">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="12.5%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="25%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="37.5%" Value="5"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="62.5%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="75%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="87.5%" Value="65"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="50"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <PauseStoryboard BeginStoryboardName="fourthStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="fiveth" Width="6" Height="6" Canvas.Left="65" Canvas.Top="7" Fill="Green">
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="fifthStoryboard">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="65"/>
+                                                <LinearDoubleKeyFrame KeyTime="12.5%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="25%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="37.5%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="5"/>
+                                                <LinearDoubleKeyFrame KeyTime="62.5%" Value="20"/>
+                                                <LinearDoubleKeyFrame KeyTime="75%" Value="35"/>
+                                                <LinearDoubleKeyFrame KeyTime="87.5%" Value="50"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="65"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <PauseStoryboard BeginStoryboardName="fifthStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+        </Canvas>
+
+        <Canvas Background="Transparent" Grid.Row="2" Grid.Column="1" Height="100" Width="100">
+            <Ellipse x:Name="first1" Width="8" Height="8" Canvas.Left="54" Canvas.Top="4" Fill="Red">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="180" CenterY="46"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="180"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="540"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="second1" Width="6" Height="6" Canvas.Left="53" Canvas.Top="4" Fill="MediumPurple">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="324" CenterY="46"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="540"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="612"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="684"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="third1" Width="6" Height="6" Canvas.Left="53" Canvas.Top="4" Fill="blue">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="396" CenterY="46"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="540"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="612"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="684"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="756"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="forth1" Width="6" Height="6" Canvas.Left="53" Canvas.Top="4" Fill="yellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="468" CenterY="46"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="540"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="612"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="684"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="756"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="828"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="fiveth1" Width="6" Height="6" Canvas.Left="53" Canvas.Top="4" Fill="Green">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="252" CenterY="46"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="540"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="612"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+        </Canvas>
+
+        <Canvas Background="Transparent" Grid.Row="3" Grid.Column="0" Height="100" Width="100">
+            <Ellipse x:Name="first2" Width="20" Height="20" Canvas.Left="40" Canvas.Top="0" Fill="Red">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="180" CenterY="50" CenterX="10"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="180"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="216"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="504"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="540"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            
+            
+            
+            <Ellipse x:Name="fiveth5" Width="16" Height="16" Canvas.Left="42" Canvas.Top="2" Fill="Green">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="216" CenterY="48" CenterX="8"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="216"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="216"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="504"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="504"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+
+            <Ellipse x:Name="forth4" Width="14" Height="14" Canvas.Left="43" Canvas.Top="3" Fill="yellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="252" CenterY="47" CenterX="7"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="468"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="third3" Width="12" Height="12" Canvas.Left="44" Canvas.Top="4" Fill="blue">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="288" CenterY="46" CenterX="6"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="432"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse x:Name="second2" Width="10" Height="10" Canvas.Left="45" Canvas.Top="5" Fill="MediumPurple">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="324" CenterY="45" CenterX="5"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="396"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+        </Canvas>
+
+        <Canvas Background="LightBlue" Grid.Row="3" Grid.Column="1" Height="100" Width="100">
+            <Ellipse Width="20" Height="20" Canvas.Left="40" Canvas.Top="0" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="180" CenterY="50" CenterX="10"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="180"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="216"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="504"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="540"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+
+
+
+            <Ellipse  Width="16" Height="16" Canvas.Left="42" Canvas.Top="2" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="216" CenterY="48" CenterX="8"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="216"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="216"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="504"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="504"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+
+            <Ellipse  Width="14" Height="14" Canvas.Left="43" Canvas.Top="3" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="252" CenterY="47" CenterX="7"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="252"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="468"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="468"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse Width="12" Height="12" Canvas.Left="44" Canvas.Top="4" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="288" CenterY="46" CenterX="6"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="288"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="432"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="432"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse Width="10" Height="10" Canvas.Left="45" Canvas.Top="5" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="324" CenterY="45" CenterX="5"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="10%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="20%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="30%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="40%" Value="324"/>
+                                                <LinearDoubleKeyFrame KeyTime="50%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="60%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="70%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="80%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="90%" Value="396"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="396"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse Width="8" Height="8" Canvas.Left="46" Canvas.Top="6" Fill="LightYellow"/>
+        </Canvas>
+
+        <Canvas Background="LightBlue" Grid.Row="4" Grid.Column="0" Height="100" Width="100">
+            <Ellipse Width="28" Height="28" Canvas.Left="36" Canvas.Top="0" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="30" CenterY="50" CenterX="14"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="30"/>
+                                                <LinearDoubleKeyFrame KeyTime="7%" Value="76"/>
+                                                <LinearDoubleKeyFrame KeyTime="13.5%" Value="119"/>
+                                                <LinearDoubleKeyFrame KeyTime="19.5%" Value="159"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="202"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="518"/>
+                                                <LinearDoubleKeyFrame KeyTime="80.5%" Value="561"/>
+                                                <LinearDoubleKeyFrame KeyTime="86.5%" Value="601"/>
+                                                <LinearDoubleKeyFrame KeyTime="93%" Value="644"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="690"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse Width="26" Height="26" Canvas.Left="37" Canvas.Top="1" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="76" CenterY="49" CenterX="13"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="76"/>
+                                                <LinearDoubleKeyFrame KeyTime="7%" Value="76"/>
+                                                <LinearDoubleKeyFrame KeyTime="13.5%" Value="119"/>
+                                                <LinearDoubleKeyFrame KeyTime="19.5%" Value="159"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="202"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="518"/>
+                                                <LinearDoubleKeyFrame KeyTime="80.5%" Value="561"/>
+                                                <LinearDoubleKeyFrame KeyTime="86.5%" Value="601"/>
+                                                <LinearDoubleKeyFrame KeyTime="93%" Value="644"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="644"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse Width="24" Height="24" Canvas.Left="38" Canvas.Top="2" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="119" CenterY="48" CenterX="12"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="119"/>
+                                                <LinearDoubleKeyFrame KeyTime="13.5%" Value="119"/>
+                                                <LinearDoubleKeyFrame KeyTime="19.5%" Value="159"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="202"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="518"/>
+                                                <LinearDoubleKeyFrame KeyTime="80.5%" Value="561"/>
+                                                <LinearDoubleKeyFrame KeyTime="86.5%" Value="601"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="601"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse Width="22" Height="22" Canvas.Left="39" Canvas.Top="3" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="159" CenterY="47" CenterX="11"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="159"/>
+                                                <LinearDoubleKeyFrame KeyTime="19.5%" Value="159"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="202"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="518"/>
+                                                <LinearDoubleKeyFrame KeyTime="80.5%" Value="561"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="561"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            
+            
+            
+            <Ellipse Width="20" Height="20" Canvas.Left="40" Canvas.Top="4" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="202" CenterY="46" CenterX="12"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="202"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="202"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="518"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="518"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+
+
+
+            <Ellipse  Width="18" Height="18" Canvas.Left="41" Canvas.Top="5" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="240" CenterY="45" CenterX="13"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="480"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+
+            <Ellipse  Width="16" Height="16" Canvas.Left="42" Canvas.Top="6" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="274" CenterY="44" CenterX="14"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="446"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse Width="14" Height="14" Canvas.Left="43" Canvas.Top="7" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="303" CenterY="43" CenterX="15"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="417"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse Width="12" Height="12" Canvas.Left="44" Canvas.Top="8" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="328" CenterY="42" CenterX="16"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="392"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+            <Ellipse Width="10" Height="10" Canvas.Left="45" Canvas.Top="9" Fill="LightYellow">
+                <Ellipse.RenderTransform>
+                    <RotateTransform  Angle="350" CenterY="41" CenterX="17"/>
+                </Ellipse.RenderTransform>
+                <Ellipse.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="370"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Style>
+            </Ellipse>
+        </Canvas>
+
+        <Canvas Background="LightBlue" Grid.Row="4" Grid.Column="1" Height="100" Width="100">
+            <Path Fill="Azure"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                <Path.Data>
+                    <GeometryGroup>
+                        <EllipseGeometry x:Name="TopLeftOuterEllipse" Center="50,50"  RadiusX="50" RadiusY="20"  />
+                        <EllipseGeometry x:Name="TopLeftInnerEllipse" Center="50,50"  RadiusX="18" RadiusY="18"  />
+                    </GeometryGroup>
+                </Path.Data>
+                <Path.RenderTransform>
+                    <RotateTransform  Angle="30" CenterY="50" CenterX="50"/>
+                </Path.RenderTransform>
+                <Path.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="30"/>
+                                                <LinearDoubleKeyFrame KeyTime="7%" Value="76"/>
+                                                <LinearDoubleKeyFrame KeyTime="13.5%" Value="119"/>
+                                                <LinearDoubleKeyFrame KeyTime="19.5%" Value="159"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="202"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="518"/>
+                                                <LinearDoubleKeyFrame KeyTime="80.5%" Value="561"/>
+                                                <LinearDoubleKeyFrame KeyTime="86.5%" Value="601"/>
+                                                <LinearDoubleKeyFrame KeyTime="93%" Value="644"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="690"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+            <Path Fill="Azure"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                <Path.Data>
+                    <GeometryGroup>
+                        <EllipseGeometry x:Name="TopLeftOuterEllipse2" Center="50,50"  RadiusX="50" RadiusY="20"  />
+                        <EllipseGeometry x:Name="TopLeftInnerEllipse2" Center="50,50"  RadiusX="18" RadiusY="18"  />
+                    </GeometryGroup>
+                </Path.Data>
+                <Path.RenderTransform>
+                    <RotateTransform  Angle="150" CenterY="50" CenterX="50"/>
+                </Path.RenderTransform>
+                <Path.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="150"/>
+                                                <LinearDoubleKeyFrame KeyTime="7%" Value="196"/>
+                                                <LinearDoubleKeyFrame KeyTime="13.5%" Value="239"/>
+                                                <LinearDoubleKeyFrame KeyTime="19.5%" Value="279"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="322"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="360"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="394"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="423"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="448"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="470"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="490"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="512"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="537"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="566"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="600"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="638"/>
+                                                <LinearDoubleKeyFrame KeyTime="80.5%" Value="681"/>
+                                                <LinearDoubleKeyFrame KeyTime="86.5%" Value="721"/>
+                                                <LinearDoubleKeyFrame KeyTime="93%" Value="764"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="810"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+            <Path Fill="Azure"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                <Path.Data>
+                    <GeometryGroup>
+                        <EllipseGeometry x:Name="TopLeftOuterEllipse3" Center="50,50"  RadiusX="50" RadiusY="20"  />
+                        <EllipseGeometry x:Name="TopLeftInnerEllipse3" Center="50,50"  RadiusX="18" RadiusY="18"  />
+                    </GeometryGroup>
+                </Path.Data>
+                <Path.RenderTransform>
+                    <RotateTransform  Angle="270" CenterY="50" CenterX="50"/>
+                </Path.RenderTransform>
+                <Path.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="270"/>
+                                                <LinearDoubleKeyFrame KeyTime="7%" Value="316"/>
+                                                <LinearDoubleKeyFrame KeyTime="13.5%" Value="359"/>
+                                                <LinearDoubleKeyFrame KeyTime="19.5%" Value="399"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="442"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="514"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="543"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="568"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="590"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="610"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="632"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="657"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="686"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="720"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="758"/>
+                                                <LinearDoubleKeyFrame KeyTime="80.5%" Value="801"/>
+                                                <LinearDoubleKeyFrame KeyTime="86.5%" Value="841"/>
+                                                <LinearDoubleKeyFrame KeyTime="93%" Value="884"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="930"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+        </Canvas>
+
+       
+
+        <Canvas Background="LightBlue" Grid.Row="5" Grid.Column="0" Height="100" Width="100">
+            <Path Fill="Azure" Stroke="Silver"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                <Path.Data>
+                    <GeometryGroup>
+                        <EllipseGeometry  Center="50,50"  RadiusX="50" RadiusY="20"  />
+                        <EllipseGeometry  Center="50,50"  RadiusX="38" RadiusY="18"/>
+                        <EllipseGeometry  Center="50,50"  RadiusX="50" RadiusY="20">
+                            <EllipseGeometry.Transform>
+                                <RotateTransform  Angle="120" CenterY="50" CenterX="50"/>
+                            </EllipseGeometry.Transform>
+                        </EllipseGeometry>
+                        <EllipseGeometry  Center="50,50"  RadiusX="38" RadiusY="18">
+                            <EllipseGeometry.Transform>
+                                <RotateTransform  Angle="120" CenterY="50" CenterX="50"/>
+                            </EllipseGeometry.Transform>
+                        </EllipseGeometry>
+                        <EllipseGeometry  Center="50,50"  RadiusX="50" RadiusY="20">
+                            <EllipseGeometry.Transform>
+                                <RotateTransform  Angle="240" CenterY="50" CenterX="50"/>
+                            </EllipseGeometry.Transform>
+                        </EllipseGeometry>
+                        <EllipseGeometry  Center="50,50"  RadiusX="38" RadiusY="18">
+                            <EllipseGeometry.Transform>
+                                <RotateTransform  Angle="2400" CenterY="50" CenterX="50"/>
+                            </EllipseGeometry.Transform>
+                        </EllipseGeometry>
+                    </GeometryGroup>
+                </Path.Data>
+                <Path.RenderTransform>
+                    <RotateTransform  Angle="30" CenterY="50" CenterX="50"/>
+                </Path.RenderTransform>
+                <Path.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="30"/>
+                                                <LinearDoubleKeyFrame KeyTime="7%" Value="76"/>
+                                                <LinearDoubleKeyFrame KeyTime="13.5%" Value="119"/>
+                                                <LinearDoubleKeyFrame KeyTime="19.5%" Value="159"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="202"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="518"/>
+                                                <LinearDoubleKeyFrame KeyTime="80.5%" Value="561"/>
+                                                <LinearDoubleKeyFrame KeyTime="86.5%" Value="601"/>
+                                                <LinearDoubleKeyFrame KeyTime="93%" Value="644"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="690"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+
+        </Canvas>
+        <Canvas Background="LightBlue" Grid.Row="5" Grid.Column="1" Height="100" Width="100">
+            <Path Fill="Azure"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                <Path.Data>
+                    <GeometryGroup>
+                        <EllipseGeometry  Center="50,50"  RadiusX="50" RadiusY="20"  />
+                        <EllipseGeometry  Center="50,50"  RadiusX="38" RadiusY="18"/>
+                        <EllipseGeometry  Center="50,50"  RadiusX="50" RadiusY="20">
+                            <EllipseGeometry.Transform>
+                                <RotateTransform  Angle="120" CenterY="50" CenterX="50"/>
+                            </EllipseGeometry.Transform>
+                        </EllipseGeometry>
+                        <EllipseGeometry  Center="50,50"  RadiusX="38" RadiusY="18">
+                            <EllipseGeometry.Transform>
+                                <RotateTransform  Angle="120" CenterY="50" CenterX="50"/>
+                            </EllipseGeometry.Transform>
+                        </EllipseGeometry>
+                        <EllipseGeometry  Center="50,50"  RadiusX="50" RadiusY="20">
+                            <EllipseGeometry.Transform>
+                                <RotateTransform  Angle="240" CenterY="50" CenterX="50"/>
+                            </EllipseGeometry.Transform>
+                        </EllipseGeometry>
+                        <EllipseGeometry  Center="50,50"  RadiusX="38" RadiusY="18">
+                            <EllipseGeometry.Transform>
+                                <RotateTransform  Angle="2400" CenterY="50" CenterX="50"/>
+                            </EllipseGeometry.Transform>
+                        </EllipseGeometry>
+                    </GeometryGroup>
+                </Path.Data>
+                <Path.RenderTransform>
+                    <RotateTransform  Angle="30" CenterY="50" CenterX="50"/>
+                </Path.RenderTransform>
+                <Path.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                <LinearDoubleKeyFrame KeyTime="0%" Value="30"/>
+                                                <LinearDoubleKeyFrame KeyTime="7%" Value="76"/>
+                                                <LinearDoubleKeyFrame KeyTime="13.5%" Value="119"/>
+                                                <LinearDoubleKeyFrame KeyTime="19.5%" Value="159"/>
+                                                <LinearDoubleKeyFrame KeyTime="26.1%" Value="202"/>
+                                                <LinearDoubleKeyFrame KeyTime="32%" Value="240"/>
+                                                <LinearDoubleKeyFrame KeyTime="37%" Value="274"/>
+                                                <LinearDoubleKeyFrame KeyTime="41.4%" Value="303"/>
+                                                <LinearDoubleKeyFrame KeyTime="45%" Value="328"/>
+                                                <LinearDoubleKeyFrame KeyTime="48.5%" Value="350"/>
+                                                <LinearDoubleKeyFrame KeyTime="51.5%" Value="370"/>
+                                                <LinearDoubleKeyFrame KeyTime="55%" Value="392"/>
+                                                <LinearDoubleKeyFrame KeyTime="58.6%" Value="417"/>
+                                                <LinearDoubleKeyFrame KeyTime="63%" Value="446"/>
+                                                <LinearDoubleKeyFrame KeyTime="68%" Value="480"/>
+                                                <LinearDoubleKeyFrame KeyTime="73.9%" Value="518"/>
+                                                <LinearDoubleKeyFrame KeyTime="80.5%" Value="561"/>
+                                                <LinearDoubleKeyFrame KeyTime="86.5%" Value="601"/>
+                                                <LinearDoubleKeyFrame KeyTime="93%" Value="644"/>
+                                                <LinearDoubleKeyFrame KeyTime="100%" Value="690"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+
+        </Canvas>
+
+        <Canvas Background="LightBlue" Grid.Row="6" Grid.Column="0" Height="100" Width="170">
+
+            <Border>
+                <Border.Effect>
+                    <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.5" />
+                </Border.Effect>
+                <Path   StrokeThickness="1" Stroke="LightGray"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Offset="0" Color="#bbcadd"/>
+                            <GradientStop Offset="0.5" Color="#eef5fd"/>
+                            <GradientStop Offset="1" Color="#bbcadd"/>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure IsClosed="True" IsFilled="True" StartPoint="30,60">
+                                <ArcSegment Point="70,60" Size="20,20" SweepDirection="Clockwise"/>
+                                <LineSegment Point="70,70"/>
+                                <LineSegment Point="65,70"/>
+                                <LineSegment Point="65,60"/>
+                                <ArcSegment Point="35,60" Size="15,15" />
+                                <LineSegment Point="35,90"/>
+                                <LineSegment Point="30,90"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <TranslateTransform X="0" Y="0"/>
+                            <ScaleTransform ScaleX="1" ScaleY="1" CenterX="32.5" CenterY="50"/>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                    <Path.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Children[0].Y" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                                    <LinearDoubleKeyFrame KeyTime="0%" Value="0"/>
+                                                    <LinearDoubleKeyFrame KeyTime="25%" Value="-10"/>
+                                                    <LinearDoubleKeyFrame KeyTime="100%" Value="-10"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Children[1].ScaleX" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                                    <LinearDoubleKeyFrame KeyTime="0%" Value="1"/>
+                                                    <LinearDoubleKeyFrame KeyTime="25%" Value="1"/>
+                                                    <LinearDoubleKeyFrame KeyTime="100%" Value="-1"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+            </Border>
+
+            <Border>
+                <Border.Effect>
+                    <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.5" />
+                </Border.Effect>
+                <Path   StrokeThickness="1" Stroke="LightGray"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Offset="0" Color="#bbcadd"/>
+                            <GradientStop Offset="0.5" Color="#eef5fd"/>
+                            <GradientStop Offset="1" Color="#bbcadd"/>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                    <Path.Data>
+                        <GeometryGroup>
+                            <PathGeometry>
+                                <PathFigure x:Name="MovingPart" IsClosed="True" IsFilled="True" StartPoint="28,65">
+                                    <LineSegment Point="72,65"/>
+                                    <LineSegment Point="72,92"/>
+                                    <LineSegment Point="28,92"/>
+                                </PathFigure>
+                            </PathGeometry>
+                            <CombinedGeometry GeometryCombineMode="Union">
+                                <CombinedGeometry.Geometry1>
+                                    <EllipseGeometry Center="50,77" RadiusX="3" RadiusY="3"/>
+                                </CombinedGeometry.Geometry1>
+                                <CombinedGeometry.Geometry2>
+                                    <PathGeometry>
+                                        <PathFigure IsClosed="True" IsFilled="True" StartPoint="50,76">
+                                            <LineSegment Point="52,85"/>
+                                            <LineSegment Point="48,85"/>
+                                        </PathFigure>
+                                    </PathGeometry>
+                                </CombinedGeometry.Geometry2>                               
+                            </CombinedGeometry>
+                        </GeometryGroup>                       
+                    </Path.Data>
+                </Path>
+            </Border>
+
+        </Canvas>
+
+        <Canvas Background="LightBlue" Grid.Row="6" Grid.Column="1" Height="100" Width="170">
+
+            <Border>
+                <Border.Effect>
+                    <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.5" />
+                </Border.Effect>
+                <Path   StrokeThickness="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#bbcadd"/>
+                            <GradientStop Offset="0.5" Color="#eef5fd"/>
+                            <GradientStop Offset="1" Color="#bbcadd"/>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                    <Path.Data>
+                        <CombinedGeometry GeometryCombineMode="Union">
+                            <CombinedGeometry.Geometry1>
+                                <GeometryGroup>
+                                    <EllipseGeometry  Center="50,50"  RadiusX="32" RadiusY="32"  />
+                                    <EllipseGeometry  Center="50,50"  RadiusX="22" RadiusY="22"  />
+                                </GeometryGroup>
+                            </CombinedGeometry.Geometry1>
+                            <CombinedGeometry.Geometry2>
+                                <CombinedGeometry GeometryCombineMode="Intersect">
+                                    <CombinedGeometry.Geometry1>
+                                        <GeometryGroup>
+                                            <EllipseGeometry  Center="18,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="0" CenterY="50" CenterX="50"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="18,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="51.42" CenterY="50" CenterX="50"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="18,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="102.85" CenterY="50" CenterX="50"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="18,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="154.28" CenterY="50" CenterX="50"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="18,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="205.71" CenterY="50" CenterX="50"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="18,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="257.14" CenterY="50" CenterX="50"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="18,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="308.57" CenterY="50" CenterX="50"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                        </GeometryGroup>
+                                    </CombinedGeometry.Geometry1>
+                                    <CombinedGeometry.Geometry2>
+                                        <EllipseGeometry  Center="50,50"  RadiusX="38" RadiusY="38">
+                                            <EllipseGeometry.Transform>
+                                                <RotateTransform  Angle="0" CenterY="50" CenterX="50"/>
+                                            </EllipseGeometry.Transform>
+                                        </EllipseGeometry>
+                                    </CombinedGeometry.Geometry2>
+                                </CombinedGeometry>
+                            </CombinedGeometry.Geometry2>
+                        </CombinedGeometry>
+
+                    </Path.Data>
+                    <Path.RenderTransform>
+                        <RotateTransform  Angle="30" CenterY="50" CenterX="50"/>
+                    </Path.RenderTransform>
+                    <Path.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                    <LinearDoubleKeyFrame KeyTime="0%" Value="30"/>
+                                                    <LinearDoubleKeyFrame KeyTime="100%" Value="690"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+            </Border>
+
+
+            <Border>
+                <Border.Effect>
+                    <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.5" />
+                </Border.Effect>
+                <Path   StrokeThickness="1"   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#bbcadd"/>
+                            <GradientStop Offset="0.5" Color="#eef5fd"/>
+                            <GradientStop Offset="1" Color="#bbcadd"/>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                    <Path.Data>
+                        <CombinedGeometry GeometryCombineMode="Union">
+                            <CombinedGeometry.Geometry1>
+                                <GeometryGroup>
+                                    <EllipseGeometry  Center="120,50"  RadiusX="32" RadiusY="32"  />
+                                    <EllipseGeometry  Center="120,50"  RadiusX="22" RadiusY="22"  />
+                                </GeometryGroup>
+                            </CombinedGeometry.Geometry1>
+                            <CombinedGeometry.Geometry2>
+                                <CombinedGeometry GeometryCombineMode="Intersect">
+                                    <CombinedGeometry.Geometry1>
+                                        <GeometryGroup>
+                                            <EllipseGeometry  Center="88,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="0" CenterY="50" CenterX="120"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="88,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="51.42" CenterY="50" CenterX="120"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="88,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="102.85" CenterY="50" CenterX="120"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="88,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="154.28" CenterY="50" CenterX="120"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="88,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="205.71" CenterY="50" CenterX="120"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="88,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="257.14" CenterY="50" CenterX="120"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                            <EllipseGeometry  Center="88,50"  RadiusX="20" RadiusY="7">
+                                                <EllipseGeometry.Transform>
+                                                    <RotateTransform  Angle="308.57" CenterY="50" CenterX="120"/>
+                                                </EllipseGeometry.Transform>
+                                            </EllipseGeometry>
+                                        </GeometryGroup>
+                                    </CombinedGeometry.Geometry1>
+                                    <CombinedGeometry.Geometry2>
+                                        <EllipseGeometry  Center="120,50"  RadiusX="38" RadiusY="38">
+                                            <EllipseGeometry.Transform>
+                                                <RotateTransform  Angle="0" CenterY="50" CenterX="120"/>
+                                            </EllipseGeometry.Transform>
+                                        </EllipseGeometry>
+                                    </CombinedGeometry.Geometry2>
+                                </CombinedGeometry>
+                            </CombinedGeometry.Geometry2>
+                        </CombinedGeometry>
+
+                    </Path.Data>
+                    <Path.RenderTransform>
+                        <RotateTransform  Angle="-30" CenterY="50" CenterX="120"/>
+                    </Path.RenderTransform>
+                    <Path.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform.Angle" Duration="0:0:3" AutoReverse="true" RepeatBehavior="Forever">
+                                                    <LinearDoubleKeyFrame KeyTime="0%" Value="-30"/>
+                                                    <LinearDoubleKeyFrame KeyTime="100%" Value="-690"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+            </Border>
+        </Canvas>
+
+        <Canvas Background="LightBlue" Grid.Row="7" Grid.Column="0" Height="100" Width="170">
+
+            <Border>
+                <Border.Effect>
+                    <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.5" />
+                </Border.Effect>
+                <Path   StrokeThickness="1" Stroke="LightGray"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Offset="0" Color="#bbcadd"/>
+                            <GradientStop Offset="0.5" Color="#eef5fd"/>
+                            <GradientStop Offset="1" Color="#bbcadd"/>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure x:Name="MovingPart2" IsClosed="True" IsFilled="True" StartPoint="30,60">
+                                <ArcSegment x:Name="arc1" Point="70,60" Size="20,20" SweepDirection="Clockwise"/>
+                                <LineSegment x:Name="line1" Point="70,70"/>
+                                <LineSegment x:Name="line2" Point="65,70"/>
+                                <LineSegment x:Name="line3" Point="65,60"/>
+                                <ArcSegment x:Name="arc2" Point="35,60" Size="15,15" />
+                                <LineSegment x:Name="line4" Point="35,90"/>
+                                <LineSegment x:Name="line5" Point="30,90"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                    <Path.Triggers>
+                        <EventTrigger RoutedEvent="Path.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard x:Name="sb">
+                                    <PointAnimationUsingKeyFrames Storyboard.TargetName="MovingPart2" Storyboard.TargetProperty="StartPoint" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearPointKeyFrame KeyTime="0%" Value="30,60"/>
+                                        <LinearPointKeyFrame KeyTime="20%" Value="30,50"/>
+                                        <LinearPointKeyFrame KeyTime="100%" Value="30,50"/>
+                                    </PointAnimationUsingKeyFrames>
+                                    <PointAnimationUsingKeyFrames Storyboard.TargetName="arc1" Storyboard.TargetProperty="Point" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearPointKeyFrame KeyTime="0%" Value="70,60"/>
+                                        <LinearPointKeyFrame KeyTime="20%" Value="70,50"/>
+                                        <LinearPointKeyFrame KeyTime="60%" Value="30,50"/>
+                                        <LinearPointKeyFrame KeyTime="100%" Value="30,50"/>
+                                    </PointAnimationUsingKeyFrames>
+                                    <PointAnimationUsingKeyFrames Storyboard.TargetName="arc2" Storyboard.TargetProperty="Point" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearPointKeyFrame KeyTime="0%" Value="35,60"/>
+                                        <LinearPointKeyFrame KeyTime="20%" Value="35,50"/>
+                                        <LinearPointKeyFrame KeyTime="60%" Value="35,50"/>
+                                        <LinearPointKeyFrame KeyTime="100%" Value="35,50"/>
+                                    </PointAnimationUsingKeyFrames>
+                                    <SizeAnimationUsingKeyFrames Storyboard.TargetName="arc1" Storyboard.TargetProperty="Size" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearSizeKeyFrame KeyTime="0%" Value="20,20"/>
+                                        <LinearSizeKeyFrame KeyTime="20%" Value="20,20"/>
+                                        <LinearSizeKeyFrame KeyTime="60%" Value="0,20"/>
+                                        <LinearSizeKeyFrame KeyTime="60%" Value="0,20"/>
+                                        <LinearSizeKeyFrame KeyTime="100%" Value="0,20"/>
+                                    </SizeAnimationUsingKeyFrames>
+                                    <SizeAnimationUsingKeyFrames Storyboard.TargetName="arc2" Storyboard.TargetProperty="Size" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearSizeKeyFrame KeyTime="0%" Value="15,15"/>
+                                        <LinearSizeKeyFrame KeyTime="20%" Value="15,15"/>
+                                        <LinearSizeKeyFrame KeyTime="60%" Value="0,15"/>
+                                        <LinearSizeKeyFrame KeyTime="60%" Value="0,15"/>
+                                        <LinearSizeKeyFrame KeyTime="100%" Value="0,15"/>
+                                    </SizeAnimationUsingKeyFrames>                                    
+                                    <PointAnimationUsingKeyFrames Storyboard.TargetName="line1" Storyboard.TargetProperty="Point" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearPointKeyFrame KeyTime="0%" Value="70,70"/>
+                                        <LinearPointKeyFrame KeyTime="20%" Value="70,60"/>
+                                        <LinearPointKeyFrame KeyTime="60%" Value="30,60"/>
+                                        <LinearPointKeyFrame KeyTime="100%" Value="30,60"/>
+                                    </PointAnimationUsingKeyFrames>
+                                    <PointAnimationUsingKeyFrames Storyboard.TargetName="line2" Storyboard.TargetProperty="Point" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearPointKeyFrame KeyTime="0%" Value="65,70"/>
+                                        <LinearPointKeyFrame KeyTime="20%" Value="65,60"/>
+                                        <LinearPointKeyFrame KeyTime="60%" Value="35,60"/>
+                                        <LinearPointKeyFrame KeyTime="100%" Value="35,60"/>
+                                    </PointAnimationUsingKeyFrames>
+                                    <PointAnimationUsingKeyFrames Storyboard.TargetName="line3" Storyboard.TargetProperty="Point" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearPointKeyFrame KeyTime="0%" Value="65,60"/>
+                                        <LinearPointKeyFrame KeyTime="20%" Value="65,50"/>
+                                        <LinearPointKeyFrame KeyTime="60%" Value="35,50"/>
+                                        <LinearPointKeyFrame KeyTime="100%" Value="35,50"/>
+                                    </PointAnimationUsingKeyFrames>
+                                    <PointAnimationUsingKeyFrames Storyboard.TargetName="line4" Storyboard.TargetProperty="Point" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearPointKeyFrame KeyTime="0%" Value="35,90"/>
+                                        <LinearPointKeyFrame KeyTime="20%" Value="35,80"/>
+                                        <LinearPointKeyFrame KeyTime="60%" Value="35,80"/>
+                                        <LinearPointKeyFrame KeyTime="60%" Value="35,80"/>
+                                        <LinearPointKeyFrame KeyTime="100%" Value="35,80"/>
+                                    </PointAnimationUsingKeyFrames>
+                                    <PointAnimationUsingKeyFrames Storyboard.TargetName="line5" Storyboard.TargetProperty="Point" Duration="0:0:1" AutoReverse="true" RepeatBehavior="Forever">
+                                        <LinearPointKeyFrame KeyTime="0%" Value="30,90"/>
+                                        <LinearPointKeyFrame KeyTime="20%" Value="30,80"/>
+                                        <LinearPointKeyFrame KeyTime="60%" Value="30,80"/>
+                                        <LinearPointKeyFrame KeyTime="60%" Value="30,80"/>
+                                        <LinearPointKeyFrame KeyTime="100%" Value="30,80"/>
+                                    </PointAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Path.Triggers>
+                </Path>
+            </Border>
+
+            <Border>
+                <Border.Effect>
+                    <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.5" />
+                </Border.Effect>
+                <Path   StrokeThickness="1" Stroke="LightGray"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0">
+                    <Path.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Offset="0" Color="#bbcadd"/>
+                            <GradientStop Offset="0.5" Color="#eef5fd"/>
+                            <GradientStop Offset="1" Color="#bbcadd"/>
+                        </LinearGradientBrush>
+                    </Path.Fill>
+                    <Path.Data>
+                        <GeometryGroup>
+                            <PathGeometry>
+                                <PathFigure IsClosed="True" IsFilled="True" StartPoint="28,65">
+                                    <LineSegment Point="72,65"/>
+                                    <LineSegment Point="72,92"/>
+                                    <LineSegment Point="28,92"/>
+                                </PathFigure>
+                            </PathGeometry>
+                            <CombinedGeometry GeometryCombineMode="Union">
+                                <CombinedGeometry.Geometry1>
+                                    <EllipseGeometry Center="50,77" RadiusX="3" RadiusY="3"/>
+                                </CombinedGeometry.Geometry1>
+                                <CombinedGeometry.Geometry2>
+                                    <PathGeometry>
+                                        <PathFigure IsClosed="True" IsFilled="True" StartPoint="50,76">
+                                            <LineSegment Point="52,85"/>
+                                            <LineSegment Point="48,85"/>
+                                        </PathFigure>
+                                    </PathGeometry>
+                                </CombinedGeometry.Geometry2>
+                            </CombinedGeometry>
+                        </GeometryGroup>
+                    </Path.Data>
+                </Path>
+            </Border>
+
+           
+        </Canvas>
+
+        <TextBlock x:Name="textBlock" Text="Loading..." Grid.ColumnSpan="2" Grid.RowSpan="1" VerticalAlignment="Center" FontSize="50" HorizontalAlignment="Center">
+            <TextBlock.Resources>
+                <Storyboard x:Key="testStoryboard">                    
+                    <DoubleAnimation From="50" To="80" Storyboard.TargetProperty="FontSize" AutoReverse="True" RepeatBehavior="Forever" Duration="0:0:0.5"/>                    
+                </Storyboard>                
+            </TextBlock.Resources>
+            <TextBlock.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard x:Name="myStoryBoard" Storyboard="{StaticResource testStoryboard}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <PauseStoryboard BeginStoryboardName="myStoryBoard"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        
+        <Button Grid.Column="0" Grid.Row="1" Content="Start" Margin="10" Click="StartBtn_Click" x:Name="startBtn" ></Button>
+        <Button Grid.Column="1" Grid.Row="1" Content="Stop" Margin="10" Click="StopBtn_Click" Template="{StaticResource btnTemplate}" Width="50" Height="50"></Button>
+    </Grid>
+</Window>
