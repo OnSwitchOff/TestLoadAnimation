@@ -74,9 +74,9 @@
                 <Ellipse.Style>
                     <Style>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="firstStoryboard">
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True" >
                                 <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
+                                    <BeginStoryboard x:Name="firstStoryboard">
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
                                                 <LinearDoubleKeyFrame KeyTime="0%" Value="5"/>
@@ -104,9 +104,9 @@
                 <Ellipse.Style>
                     <Style>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="secondStoryboard">
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
                                 <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
+                                    <BeginStoryboard  x:Name="secondStoryboard">
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
                                                 <LinearDoubleKeyFrame KeyTime="0%" Value="20"/>
@@ -134,9 +134,9 @@
                 <Ellipse.Style>
                     <Style>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="thirdStoryboard">
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True" >
                                 <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
+                                    <BeginStoryboard x:Name="thirdStoryboard">
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
                                                 <LinearDoubleKeyFrame KeyTime="0%" Value="35"/>
@@ -164,9 +164,9 @@
                 <Ellipse.Style>
                     <Style>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="fourthStoryboard">
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
                                 <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
+                                    <BeginStoryboard  x:Name="fourthStoryboard">
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
                                                 <LinearDoubleKeyFrame KeyTime="0%" Value="50"/>
@@ -194,9 +194,9 @@
                 <Ellipse.Style>
                     <Style>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLoading}" Value="True" x:Name="fifthStoryboard">
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True" >
                                 <DataTrigger.EnterActions>
-                                    <BeginStoryboard>
+                                    <BeginStoryboard x:Name="fifthStoryboard">
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Left)" Duration="0:0:3" AutoReverse="False" RepeatBehavior="Forever">
                                                 <LinearDoubleKeyFrame KeyTime="0%" Value="65"/>
